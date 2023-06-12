@@ -1,14 +1,9 @@
 name: Test Project
 on:
-  pull_request:
-    types:
-      - opened
   workflow_dispatch:
   push:
     branches:
       - main
-    paths-ignore:
-      - '.github/workflows/*'
 jobs:
     test:
         runs-on: ubuntu-latest
@@ -23,7 +18,7 @@ jobs:
               run: npm ci
             - name: Run tests
               run: npm test
-    deploy:
+    build:
         needs: test
         runs-on: ubuntu-latest
         steps:
@@ -37,5 +32,16 @@ jobs:
               run: npm ci
             - name: Build project
               run: npm run build
-            - name: Deploy
+            - name: Upload artifact
+              uses: actions/upload-artifact@v3
+              with:
+                name: dist-files
+                path: |
+                  dist
+                  package.json
+    deploy:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - name: Deploy project
               run: echo "Deploying ..." 
