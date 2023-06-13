@@ -4,8 +4,12 @@ on:
   push:
     branches:
       - main
+env:
+  MONGODB_DB_NAME: database_name
 jobs:
     test:
+        env:
+          MONGODB_CLUSTER_NAME: cluster_name
         runs-on: ubuntu-latest
         steps:
             - name: Get code from repo
@@ -23,6 +27,8 @@ jobs:
               run: npm ci
             - name: Run tests
               run: npm test
+            - name: Print cluster name
+              run: echo ${{ env.MONGODB_CLUSTER_NAME }}
     build:
         needs: test
         runs-on: ubuntu-latest
