@@ -85,11 +85,11 @@ jobs:
             - name: Deploy project
               run: echo "Deploying ..."
     report:
-      needs: [build, deploy]
+      needs: deploy
       if: failure()
       runs-on: ubuntu-latest
       steps:
         - name: output information
           run: |
             echo "Sth went wrong"
-            echo "${{ github }}"
+            echo "${{ toJson(github) }}"
