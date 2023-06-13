@@ -34,7 +34,7 @@ jobs:
             - name: Print secret
               run: echo ${{ secrets.TESTING_SECRET }}
             - name: Upload test report
-              if: steps.run-test.outcome == 'failure'
+              if: failure() && steps.run-test.outcome == 'failure'
               uses: actions/upload-artifact@v3
               with:
                 name: test-report
