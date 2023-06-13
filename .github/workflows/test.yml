@@ -29,6 +29,8 @@ jobs:
               run: npm test
             - name: Print cluster name
               run: echo ${{ env.MONGODB_CLUSTER_NAME }}
+            - name: Print secret
+              run: echo ${{ secrets.EXAMPLE_SECRET }}
     build:
         needs: test
         runs-on: ubuntu-latest
