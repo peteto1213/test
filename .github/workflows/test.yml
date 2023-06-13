@@ -80,8 +80,6 @@ jobs:
         uses: ./.github/workflows/reusable.yml
         with:
           artifact-name: dist-files
-        secrets:
-          some-secrets: ${{ secrets.EXAMPLE_SECRET }}
     print-deploy-result:
       needs: deploy
       runs-on: ubuntu-latest
