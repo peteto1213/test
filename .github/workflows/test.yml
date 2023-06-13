@@ -20,11 +20,13 @@ jobs:
               with:
                 node-version: 18
             - name: Cache dependencies
+              id: cache
               uses: actions/cache@v3
               with:
                 path: ~/.npm
                 key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
             - name: Install dependencies
+              if: steps.cache.outputs.cache-hit != 'true'
               run: npm ci
             - name: Run tests
               id: run-test
@@ -52,11 +54,13 @@ jobs:
               with:
                 node-version: 18
             - name: Cache dependencies
+              if: cache
               uses: actions/cache@v3
               with:
                 path: ~/.npm
                 key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
             - name: Install dependencies
+              if: steps.cache.output.cache-hit != 'true'
               run: npm ci
             - name: Build project
               run: npm run build
